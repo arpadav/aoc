@@ -1,29 +1,15 @@
-
 use std::include_str;
 
 fn main() {
     const INPUT: &str = include_str!("../data/input.txt");
-
-    // replace words with digits
-    // for any leading/trailing characters that are wrapped with any other characters, the
-    // characters remain
-    let input = INPUT                                                                                                                                                         
-        .replace("one", "1e")                                                                                                                                                     
-        .replace("two", "t2o")                                                                                                                                                    
-        .replace("three", "t3e")                                                                                                                                                  
-        .replace("four", "4")                                                                                                                                                     
-        .replace("five", "5e")                                                                                                                                                    
-        .replace("six", "6")                                                                                                                                                      
-        .replace("seven", "7n")                                                                                                                                                   
-        .replace("eight", "e8t")                                                                                                                                                  
-        .replace("nine", "n9e");
+    let input = INPUT.lines().collect::<Vec<&str>>();
 
     // start timer
     let start = std::time::Instant::now();
 
     let mut line_sum: Vec<u8> = vec![0; input.len()];
     input
-    .lines()
+    .iter()
     .enumerate()
     .for_each(|(i, line)| {
         let line_bytes = line.as_bytes();
