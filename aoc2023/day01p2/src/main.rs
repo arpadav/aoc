@@ -1,3 +1,5 @@
+// Arpad Voros (https://github.com/arpadav/)
+
 // ---------------------------------------------------------------------------------------------
 // external
 // ---------------------------------------------------------------------------------------------
@@ -17,13 +19,11 @@ const INPUT: &str = include_str!("../data/input.txt");
 /// 
 /// The problem simply put:
 /// - input is a text file of strings, delimited by newlines
-/// - there are numbers in the strings, and each line has a 10's digit and a 1's digit to
-///  represent a two digit number
+/// - there are numbers in the strings, and each line has a 10's digit and a 1's digit to represent a two digit number
 /// - sometimes, the numbers are spelled out using words
 /// - the 10's digit is always the first number in the string
 /// - the 1's digit is always the last number in the string
-/// - if the string only has 1 number, whether spelled out or not (always will),
-///  both 10's and 1's digits are the same
+/// - if the string only has 1 number, whether spelled out or not (always will), both 10's and 1's digits are the same
 /// - sum all the two digit numbers
 fn main() {
     // ---------------------------------------------------------------------------------------------
@@ -44,10 +44,10 @@ fn main() {
     .replace("six", "6")
     .replace("seven", "7n")
     .replace("eight", "e8t")
+    .replace("nine", "n9e");
     // ---------------------------------------------------------------------------------------------
     // initialize total sum
     // ---------------------------------------------------------------------------------------------
-    .replace("nine", "n9e");
     let mut sum: usize = 0;
     // ---------------------------------------------------------------------------------------------
     // iterate through input (line by line)

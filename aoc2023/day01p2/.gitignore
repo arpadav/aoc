@@ -5,4 +5,4 @@ Cargo.lock
 # personal
 .vscode
 data/*
-!data/get.sh
+!data/get.*
