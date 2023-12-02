@@ -51,7 +51,7 @@ fn main() {
     // if character is a digit, add it to sum and exit the loop
     // ---------------------------------------------------------------------------------------------
         for c in line_bytes {
-            match custom_is_digit(c) {
+            match is_digit(c) {
                 None => continue,
                 Some(d) => {
                     store_upper_nibble(&mut line_sum[i], d);
@@ -64,7 +64,7 @@ fn main() {
     // if character is a digit, add it to sum and exit the loop
     // ---------------------------------------------------------------------------------------------
         for c in line_bytes.iter().rev() {
-            match custom_is_digit(c) {
+            match is_digit(c) {
                 None => continue,
                 Some(d) => {
                     store_lower_nibble(&mut line_sum[i], d);
@@ -98,7 +98,7 @@ fn main() {
 /// # Returns
 /// 
 /// Returns `Some(u8)` if the character is a digit, otherwise `None`.
-fn custom_is_digit(c: &u8) -> Option<u8> {
+fn is_digit(c: &u8) -> Option<u8> {
     // ---------------------------------------------------------------------------------------------
     // ASSUMPTION: `c`` is a single ASCII character
     // ---------------------------------------------------------------------------------------------
