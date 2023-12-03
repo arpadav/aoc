@@ -1,1 +1,0 @@
-C:\Users\arpad\Documents\Projects\aoc\aoc2023\day02p2\target\debug\day02p2.exe: C:\Users\arpad\Documents\Projects\aoc\aoc2023\day02p2\data\input.txt C:\Users\arpad\Documents\Projects\aoc\aoc2023\day02p2\src\main.rs
