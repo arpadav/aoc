@@ -13,27 +13,21 @@ const INPUT: &str = include_str!("../data/input.txt");
 
 fn main() {
     // ---------------------------------------------------------------------------------------------
-    // inputs
-    // ---------------------------------------------------------------------------------------------
-    let (red, blue, green) = (12, 14, 13);
-    // ---------------------------------------------------------------------------------------------
     // solution 1
     // ---------------------------------------------------------------------------------------------
     let start = std::time::Instant::now();
-    let solution = solution_1(red, blue, green);
+    let solution = solution_1();
     let duration = start.elapsed();
     println!("Solution 1: {}", solution);
     println!("Solution 1 time elapsed: {:?}", duration);
     println!();
 }
 
-fn solution_1(red: usize, blue: usize, green: usize) -> usize {
-    let game = Game::new(red, blue, green);
+fn solution_1() -> usize {
+    let mut game = Game::new();
     INPUT
     .lines()
-    .enumerate()
-    .filter(|(_, line)| { game.possible(line.as_bytes()) })
-    .fold(0, |acc, (i, _)| acc + i + 1)
+    .fold(0, |acc, line| acc + game.calculate_power(line.as_bytes()) )
 }
 
 struct Game {
@@ -43,20 +37,30 @@ struct Game {
 }
 
 impl Game {
-    fn new(max_red: usize, max_blue: usize, max_green: usize) -> Self {
+    fn new() -> Self {
         Self {
-            max_red,
-            max_blue,
-            max_green,
+            max_red: 0,
+            max_blue: 0,
+            max_green: 0,
         }
     }
 
-    fn possible(&self, input: &[u8]) -> bool {
+    fn power(&self) -> usize {
+        self.max_red * self.max_blue * self.max_green
+    }
+
+    fn reset(&mut self) {
+        self.max_red = 0;
+        self.max_blue = 0;
+        self.max_green = 0;
+    }
+
+    fn calculate_power(&mut self, input: &[u8]) -> usize {
+        self.reset();
         let mut idx = 0;
         let mut temp_num: usize = 0;
         let mut flag__look_for_color = false;
         let mut flag__game_started = false;
-        let mut flag__is_possible = true;
 
         // iterate through input
         while idx < input.len() {
@@ -89,22 +93,13 @@ impl Game {
                             flag__look_for_color = false;
                             match c {
                                 b'r' => {
-                                    if temp_num > self.max_red {
-                                        flag__is_possible = false;
-                                        break;
-                                    }
+                                    if temp_num > self.max_red { self.max_red = temp_num; }
                                 }
                                 b'b' => {
-                                    if temp_num > self.max_blue {
-                                        flag__is_possible = false;
-                                        break;
-                                    }
+                                    if temp_num > self.max_blue { self.max_blue = temp_num; }
                                 }
                                 b'g' => {
-                                    if temp_num > self.max_green {
-                                        flag__is_possible = false;
-                                        break;
-                                    }
+                                    if temp_num > self.max_green { self.max_green = temp_num; }
                                 }
                                 _ => {},
                             }
@@ -119,7 +114,7 @@ impl Game {
                 },
             }
         }
-        flag__is_possible
+        self.power()
     }
 }
 

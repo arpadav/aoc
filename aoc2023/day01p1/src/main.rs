@@ -4,11 +4,6 @@
 // external
 // ---------------------------------------------------------------------------------------------
 use std::include_str;
-// use criterion::{
-//     Criterion,
-//     criterion_main,
-//     criterion_group,
-// };
 
 // ---------------------------------------------------------------------------------------------
 // constants
@@ -31,34 +26,39 @@ const INPUT: &str = include_str!("../data/input.txt");
 /// - sum all the two digit numbers
 fn main() {
     // ---------------------------------------------------------------------------------------------
-    // solution 1
+    // solutions
     // ---------------------------------------------------------------------------------------------
-    let start = std::time::Instant::now();
-    let solution = solution_1();
-    let duration = start.elapsed();
-    println!("Solution 1: {}", solution);
-    println!("Solution 1 time elapsed: {:?}", duration);
-    println!();
+    let solutions: Vec<fn() -> usize> =
+    vec![
+        solution_1,
+        solution_2,
+        solution_3,
+        solution_4,
+        solution_5,
+    ];
+    let num_calls = 10;
     // ---------------------------------------------------------------------------------------------
-    // solution 2
+    // naive benchmarking
     // ---------------------------------------------------------------------------------------------
-    let start = std::time::Instant::now();
-    let solution = solution_2();
-    let duration = start.elapsed();
-    println!("Solution 2: {}", solution);
-    println!("Solution 2 time elapsed: {:?}", duration);
-    println!();
-    // ---------------------------------------------------------------------------------------------
-    // solution 3
-    // ---------------------------------------------------------------------------------------------
-    let start = std::time::Instant::now();
-    let solution = solution_3();
-    let duration = start.elapsed();
-    println!("Solution 3: {}", solution);
-    println!("Solution 3 time elapsed: {:?}", duration);
-    println!();
+    solutions
+    .iter()
+    .enumerate()
+    .for_each(|(i, solution)| {
+        let mut total_duration = std::time::Duration::new(0, 0);
+        let mut s: usize = 0;
+        for _ in 0..num_calls {
+            let start = std::time::Instant::now();
+            s = solution();
+            total_duration += start.elapsed();
+        }
+        println!("Solution {}: {}", i + 1, s);
+        println!("Solution {}, mean time elapsed: {:?}", i + 1, total_duration / num_calls);
+        println!();
+    });
 }
 
+/// num_calls: 100000
+/// mean time elapsed: 717.063µs
 fn solution_1() -> usize {
     // ---------------------------------------------------------------------------------------------
     // collect input to get length
@@ -109,6 +109,8 @@ fn solution_1() -> usize {
     sum.iter().map(|&x| x as usize).sum()
 }
 
+/// num_calls: 100000
+/// mean time elapsed: 647.966µs
 fn solution_2() -> usize {
     // ---------------------------------------------------------------------------------------------
     // init sum
@@ -162,6 +164,8 @@ fn solution_2() -> usize {
     sum
 }
 
+/// num_calls: 100000
+/// mean time elapsed: 653.737µs
 fn solution_3() -> usize {
     // ---------------------------------------------------------------------------------------------
     // init sum
@@ -205,6 +209,96 @@ fn solution_3() -> usize {
         }
     });
     sum
+}
+
+/// num_calls: 100000
+/// mean time elapsed: 694.539µs
+fn solution_4() -> usize {
+    // ---------------------------------------------------------------------------------------------
+    // iterate through input (line by line)
+    // ---------------------------------------------------------------------------------------------
+    INPUT
+    .lines()
+    .fold(0, |acc, line| {
+    // ---------------------------------------------------------------------------------------------
+    // initialize line sum
+    // ---------------------------------------------------------------------------------------------
+        let mut line_sum: u8 = 0;
+    // ---------------------------------------------------------------------------------------------
+    // get line as bytes
+    // ---------------------------------------------------------------------------------------------
+        let line_bytes = line.as_bytes();
+    // ---------------------------------------------------------------------------------------------
+    // loop through characters forward
+    // if character is a digit, add it to sum and exit the loop
+    // ---------------------------------------------------------------------------------------------
+        for c in line_bytes {
+            match is_digit(c) {
+                None => continue,
+                Some(d) => {
+                    store_upper_nibble(&mut line_sum, d);
+                    break;
+                },
+            }
+        }
+    // ---------------------------------------------------------------------------------------------
+    // loop through characters backward
+    // if character is a digit, add it to sum and exit the loop
+    // ---------------------------------------------------------------------------------------------
+        for c in line_bytes.iter().rev() {
+            match is_digit(c) {
+                None => continue,
+                Some(d) => {
+                    store_lower_nibble(&mut line_sum, d);
+                    break;
+                },
+            }
+        }
+        acc + line_sum as usize
+    })
+}
+
+/// num_calls: 100000
+/// mean time elapsed: 674.741µs
+fn solution_5() -> usize {
+    // ---------------------------------------------------------------------------------------------
+    // iterate through input (line by line)
+    // ---------------------------------------------------------------------------------------------
+    INPUT
+    .lines()
+    .fold(0, |mut acc, line| {
+    // ---------------------------------------------------------------------------------------------
+    // get line as bytes
+    // ---------------------------------------------------------------------------------------------
+        let line_bytes = line.as_bytes();
+    // ---------------------------------------------------------------------------------------------
+    // loop through characters forward
+    // if character is a digit, add it to sum and exit the loop
+    // ---------------------------------------------------------------------------------------------
+        for c in line_bytes {
+            match is_digit(c) {
+                None => continue,
+                Some(d) => {
+                    acc += 10 * d as usize;
+                    break;
+                },
+            }
+        }
+    // ---------------------------------------------------------------------------------------------
+    // loop through characters backward
+    // if character is a digit, add it to sum and exit the loop
+    // ---------------------------------------------------------------------------------------------
+        for c in line_bytes.iter().rev() {
+            match is_digit(c) {
+                None => continue,
+                Some(d) => {
+                    acc += d as usize;
+                    break;
+                },
+            }
+        }
+        acc
+    })
 }
 
 /// Checks if the given character is a digit.
