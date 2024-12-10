@@ -1,8 +1,0 @@
-# rust
-target
-Cargo.lock
-
-# personal
-.vscode
-data/*
-!data/get.*

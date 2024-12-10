@@ -1,0 +1,143 @@
+[package]
+name = "aoc2023"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[features]
+default = []
+full = [
+    "day01",
+    "day02",
+    "day03",
+    "day04",
+    "day05",
+    "day06",
+    "day07",
+    "day08",
+    "day09",
+    "day10",
+    "day11",
+    "day12",
+    "day13",
+    "day14",
+    "day15",
+    "day16",
+    "day17",
+    "day18",
+    "day19",
+    "day10",
+    "day21",
+    "day22",
+    "day23",
+    "day24",
+    "day25",
+]
+
+day01 = ["day01p1", "day01p2"]
+day01p1 = []
+day01p2 = []
+
+day02 = ["day02p1", "day02p2"]
+day02p1 = []
+day02p2 = []
+
+day03 = ["day03p1", "day03p2"]
+day03p1 = []
+day03p2 = []
+
+day04 = ["day04p1", "day04p2"]
+day04p1 = []
+day04p2 = []
+
+day05 = ["day05p1", "day05p2"]
+day05p1 = []
+day05p2 = []
+
+day06 = ["day06p1", "day06p2"]
+day06p1 = []
+day06p2 = []
+
+day07 = ["day07p1", "day07p2"]
+day07p1 = []
+day07p2 = []
+
+day08 = ["day08p1", "day08p2"]
+day08p1 = []
+day08p2 = []
+
+day09 = ["day09p1", "day09p2"]
+day09p1 = []
+day09p2 = []
+
+day10 = ["day10p1", "day10p2"]
+day10p1 = []
+day10p2 = []
+
+day11 = ["day11p1", "day11p2"]
+day11p1 = []
+day11p2 = []
+
+day12 = ["day12p1", "day12p2"]
+day12p1 = []
+day12p2 = []
+
+day13 = ["day13p1", "day13p2"]
+day13p1 = []
+day13p2 = []
+
+day14 = ["day14p1", "day14p2"]
+day14p1 = []
+day14p2 = []
+
+day15 = ["day15p1", "day15p2"]
+day15p1 = []
+day15p2 = []
+
+day16 = ["day16p1", "day16p2"]
+day16p1 = []
+day16p2 = []
+
+day17 = ["day17p1", "day17p2"]
+day17p1 = []
+day17p2 = []
+
+day18 = ["day18p1", "day18p2"]
+day18p1 = []
+day18p2 = []
+
+day19 = ["day19p1", "day19p2"]
+day19p1 = []
+day19p2 = []
+
+day20 = ["day20p1", "day20p2"]
+day20p1 = []
+day20p2 = []
+
+day21 = ["day21p1", "day21p2"]
+day21p1 = []
+day21p2 = []
+
+day22 = ["day22p1", "day22p2"]
+day22p1 = []
+day22p2 = []
+
+day23 = ["day23p1", "day23p2"]
+day23p1 = []
+day23p2 = []
+
+day24 = ["day24p1", "day24p2"]
+day24p1 = []
+day24p2 = []
+
+day25 = ["day25p1", "day25p2"]
+day25p1 = []
+day25p2 = []
+
+[profile.release]
+lto = true
+strip = true
+opt-level = 3
+panic = "abort"
+codegen-units = 1
